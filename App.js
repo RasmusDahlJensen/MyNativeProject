@@ -7,7 +7,7 @@ import {
 	TextInput,
 	Pressable,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 
 const arrData = [
@@ -34,6 +34,16 @@ const ListItem = (props) => {
 };
 
 export default function App() {
+	const [taskList, setTaskList] = useState([]);
+
+	const addTaskHandler = (data) => {
+		// console.log(data);
+		setTaskList((curTasks) => [
+			...curTasks,
+			{ text: data, id: Math.random().toString() },
+		]);
+	};
+
 	return (
 		<View style={styles.container}>
 			{/* <StatusBar
@@ -49,14 +59,14 @@ export default function App() {
 					source={require("./assets/favicon.png")}
 				></Image>
 			</View>
-			<View>
+			<View style={styles.formContainer}>
 				<TextInput
 					style={styles.input}
 					placeholder="Placeholder"
 					keyboardType="text"
 				/>
-				<Pressable>
-					<Text>Pressable</Text>
+				<Pressable onPress={addTaskHandler} style={styles.pressable}>
+					<Text style={styles.pressableText}>+</Text>
 				</Pressable>
 			</View>
 			<View style={styles.main}>
@@ -117,8 +127,30 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 40,
+		width: "75%",
 		margin: 10,
 		borderWidth: 1,
 		padding: 5,
+		borderRadius: 10,
+		marginLeft: 20,
+	},
+	pressable: {
+		backgroundColor: "orange",
+		height: 40,
+		width: 40,
+		borderRadius: 10,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	pressableText: {
+		fontSize: 30,
+		fontWeight: 300,
+	},
+	formContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		borderBottomWidth: 0.6,
+		paddingBottom: 20,
+		paddingTop: 20,
 	},
 });
