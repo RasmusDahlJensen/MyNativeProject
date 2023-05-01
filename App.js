@@ -11,12 +11,6 @@ import {
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 
-const arrData = [
-	{ id: 1, title: "Item 1" },
-	{ id: 2, title: "Item 2" },
-	{ id: 3, title: "Item 3" },
-];
-
 const ListItem = (props) => {
 	return (
 		<View style={styles.listItem}>
