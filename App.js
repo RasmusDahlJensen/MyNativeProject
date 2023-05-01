@@ -9,7 +9,6 @@ import {
 	Button,
 } from "react-native";
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 
 const ListItem = (props) => {
 	return (
