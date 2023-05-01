@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	FlatList,
+	TextInput,
+	Pressable,
+} from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 
@@ -7,7 +15,7 @@ const arrData = [
 		id: 1,
 		title: "item 1",
 	},
-	{ 
+	{
 		id: 2,
 		title: "item 2",
 	},
@@ -36,10 +44,20 @@ export default function App() {
 			/> */}
 			<View style={styles.header}>
 				<Text style={styles.headline}>TodoList</Text>
-				<Image  
+				<Image
 					style={styles.logo}
 					source={require("./assets/favicon.png")}
 				></Image>
+			</View>
+			<View>
+				<TextInput
+					style={styles.input}
+					placeholder="Placeholder"
+					keyboardType="text"
+				/>
+				<Pressable>
+					<Text>Pressable</Text>
+				</Pressable>
 			</View>
 			<View style={styles.main}>
 				<FlatList
@@ -96,5 +114,11 @@ const styles = StyleSheet.create({
 	listText: {
 		color: "white",
 		fontWeight: "500",
+	},
+	input: {
+		height: 40,
+		margin: 10,
+		borderWidth: 1,
+		padding: 5,
 	},
 });
