@@ -6,23 +6,15 @@ import {
 	FlatList,
 	TextInput,
 	Pressable,
+	Button,
 } from "react-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 
 const arrData = [
-	{
-		id: 1,
-		title: "item 1",
-	},
-	{
-		id: 2,
-		title: "item 2",
-	},
-	{
-		id: 3,
-		title: "item 3",
-	},
+	{ id: 1, title: "Item 1" },
+	{ id: 2, title: "Item 2" },
+	{ id: 3, title: "Item 3" },
 ];
 
 const ListItem = (props) => {
@@ -34,46 +26,54 @@ const ListItem = (props) => {
 };
 
 export default function App() {
+	const [enteredTaskText, setEnteredTaskText] = useState();
 	const [taskList, setTaskList] = useState([]);
 
-	const addTaskHandler = (data) => {
-		// console.log(data);
+	const taskTextHandler = (enteredTaskText) => {
+		setEnteredTaskText(enteredTaskText);
+	};
+
+	const taskHandler = () => {
 		setTaskList((curTasks) => [
 			...curTasks,
-			{ text: data, id: Math.random().toString() },
+			{ id: Math.random().toString(), title: enteredTaskText },
 		]);
+		setEnteredTaskText("");
+	};
+
+	const deleteTaskHandler = (id) => {
+		setTaskList(taskList.filter((task) => task.id !== id));
 	};
 
 	return (
 		<View style={styles.container}>
-			{/* <StatusBar
-				barStyle="default"
-				hidden={false}
-				backgroundColor="darkcyan"
-				translucent={true}
-			/> */}
 			<View style={styles.header}>
-				<Text style={styles.headline}>TodoList</Text>
+				<Text style={styles.headline}>ToDoList</Text>
 				<Image
-					style={styles.logo}
 					source={require("./assets/favicon.png")}
+					style={styles.logo}
 				></Image>
 			</View>
-			<View style={styles.formContainer}>
-				<TextInput
-					style={styles.input}
-					placeholder="Placeholder"
-					keyboardType="text"
-				/>
-				<Pressable onPress={addTaskHandler} style={styles.pressable}>
-					<Text style={styles.pressableText}>+</Text>
-				</Pressable>
-			</View>
 			<View style={styles.main}>
+				<View style={styles.formContainer}>
+					<TextInput
+						placeholder="Indtast"
+						style={styles.input}
+						onChangeText={taskTextHandler}
+						value={enteredTaskText}
+					></TextInput>
+					<Pressable style={styles.pressable} onPress={taskHandler}>
+						<Text style={styles.pressableText}>+</Text>
+					</Pressable>
+				</View>
 				<FlatList
-					data={arrData}
+					data={taskList}
 					renderItem={(itemData) => {
-						return <ListItem title={itemData.item.title}></ListItem>;
+						return (
+							<Pressable onPress={(e) => deleteTaskHandler(itemData.item.id)}>
+								<ListItem title={itemData.item.title}></ListItem>
+							</Pressable>
+						);
 					}}
 				></FlatList>
 			</View>
@@ -152,5 +152,6 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 0.6,
 		paddingBottom: 20,
 		paddingTop: 20,
+		marginBottom: 10,
 	},
 });
